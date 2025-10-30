@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Cumpleaños Sorpresa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0d47a1 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Animación de confeti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD700;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header con icono */
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            animation: fadeInDown 1s ease;
+        }
+
+        .ghost-icon {
+            font-size: 60px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .title .highlight {
+            color: #00e5ff;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+
+        /* Alerta de sorpresa */
+        .surprise-alert {
+            background: linear-gradient(135deg, #ff1744 0%, #f50057 100%);
+            border: 3px solid #fff;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 23, 68, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .surprise-alert h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            animation: shake 0.5s ease infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        .surprise-alert p {
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Contador */
+        .countdown {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .countdown-title {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #00e5ff;
+        }
+
+        .countdown-boxes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .countdown-box {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            border: 2px solid #00e5ff;
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00e5ff;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* Fecha y hora */
+        .event-date {
+            background: rgba(0, 229, 255, 0.15);
+            border-left: 4px solid #00e5ff;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .event-date-icon {
+            font-size: 30px;
+        }
+
+        /* Sección principal */
+        .main-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+
+        .main-title {
+            font-size: 42px;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .main-title .white {
+            color: white;
+        }
+
+        .main-title .cyan {
+            color: #00e5ff;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+        }
+
+        .description {
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+        }
+
+        .highlight-text {
+            color: #00e5ff;
+            font-weight: bold;
+        }
+
+        /* Sección de imagen personalizable */
+        .image-section {
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2) 0%, rgba(21, 101, 192, 0.3) 100%);
+            border: 3px dashed rgba(0, 229, 255, 0.5);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            border-color: #00e5ff;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+        }
+
+        .upload-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .upload-text {
+            font-size: 18px;
+            color: #00e5ff;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Detalles del evento */
+        .event-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .detail-item {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1) 0%, rgba(21, 101, 192, 0.1) 100%);
+            border-left: 4px solid #00e5ff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .detail-item h3 {
+            color: #00e5ff;
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-item p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-icon {
+            font-size: 24px;
+        }
+
+        /* Botones */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .btn {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00e5ff 0%, #00b8d4 100%);
+            color: #0a1628;
+            box-shadow: 0 5px 25px rgba(0, 229, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animaciones de entrada */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 24px;
+            }
+
+            .main-title {
+                font-size: 32px;
+            }
+
+            .countdown-boxes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="ghost-icon">🎂</div>
+            <h1 class="title">Estas invitad@ al <span class="highlight">Cumpleaños Sorpresa de Erasmo Mayta por sus 50 años</span></h1>
+        </div>
+
+        <!-- Alerta de Sorpresa -->
+        <div class="surprise-alert">
+            <h2>🤫 ¡SHHH! ES UNA SORPRESA 🤫</h2>
+            <p><strong>⚠️ ¡MÁXIMA CONFIDENCIALIDAD! ⚠️</strong></p>
+            <p>🕐 <strong>Llegar 30 minutos ANTES</strong></p>
+            <p>🔒 <strong>Discreción absoluta - No lo delates</strong></p>
+            <p>📵 <strong>No publicar en redes sociales</strong></p>
+        </div>
+
+        <!-- Contador -->
+        <div class="countdown">
+            <div class="countdown-title">⏰ EL EVENTO COMIENZA EN ⏰</div>
+            <div class="countdown-boxes">
+                <div class="countdown-box">
+                    <span class="countdown-number" id="days">01</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="hours">12</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="minutes">30</span>
+                    <span class="countdown-label">Min</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seg</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fecha del Evento -->
+        <div class="event-date">
+            <span class="event-date-icon">📅</span>
+            <div>
+                <strong>VIERNES • 12:30 PM</strong><br>
+                <small>Los invitados deben llegar a las 12:00 PM</small>
+            </div>
+        </div>
+
+        <!-- Sección Principal -->
+        <div class="main-section">
+            <h2 class="main-title">
+                <span class="white">FIESTA</span><br>
+                <span class="cyan">SORPRESA</span>
+            </h2>
+            <p class="description">
+                Celebramos los <span class="highlight-text">50 años de Erasmo Mayta</span>. 
+                Un día lleno de risas y bailes junto Erasmo esposa e hijos.
+                <span class="highlight-text">al estilo de la Tunantada</span>.
+            </p>
+        </div>
+
+        <!-- Detalles del Evento -->
+        <div class="event-details">
+            <div class="detail-item">
+                <h3><span class="detail-icon">🎂</span> Motivo de la Celebración</h3>
+                <p>Festejando sus <strong>50 primaveras</strong> con la alegría de la Tunantada. ¡Una celebración que quedará en la memoria de todos!</p>
+            </div>
+
+            <div class="detail-item">
+                <h3><span class="detail-icon">⏰</span> Horarios Importantes</h3>
+                <p><strong>🚨 Invitados llegan:</strong> 12:00 PM (¡Ser puntuales es CRÍTICO!)</p>
+                <p><strong>🎉 Erasmo llega:</strong> 12:30 PM en punto</p>
+                <p><strong>⚡ Sorpresa:</strong> ¡A las 12:40 PM todos gritamos "SORPRESA"!</p>
+            </div>
+
+            <div class="detail-item">
+                <h3><span class="detail-icon">📍</span> Lugar</h3>
+                <p><strong>Patio de reten de la empresa virgen de fatima , terminal zonal</strong></p>
+                <p>Ciudad de Puno</p>
+                <p style="margin-top: 10px;">
+                    <a href="https://maps.app.goo.gl/vJVQZimsBqLbNXqU9" target="_blank" style="color: #00e5ff; text-decoration: none;">
+                        📍 Ver en Google Maps APRETA ESTE LINK
+                    </a>
+                </p>
+            </div>
+
+            <div class="detail-item">
+                <h3><span class="detail-icon">👔</span> Código de Vestimenta</h3>
+                <p><strong>¡A tu preferencia!</strong></p>
+                <p>Vístete al estilo de la Tunantada o con ropa legible por que sacaran a bailar mantente preparado ! </p>
+            </div>
+
+            <div class="detail-item">
+                <h3><span class="detail-icon">✅</span> Confirmación OBLIGATORIA</h3>
+                <p><strong>Fecha límite:</strong> 1 días antes del evento</p>
+                <p><strong>Contacto:</strong> Nataly 939421350</p>
+                <p>Para organizar todo a la perfección, tu confirmación es esencial. Responde por WhatsApp indicando cuántas personas asistirán.</p>
+            </div>
+
+            <div class="detail-item">
+                <h3><span class="detail-icon">📞</span> Contacto para Dudas</h3>
+                <p><strong>Organizador Principal:</strong>Oscar Mayta</p>
+                <p><strong>WhatsApp:</strong>989725587</p>
+                <p>Para cualquier consulta o emergencia, no dudes en contactarnos.</p>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="button-container">
+            <button class="btn btn-primary" onclick="confirmarAsistencia()">
+                ✅ CONFIRMAR ASISTENCIA 
+            </button>
+        </div>
+
+        <!-- Mensaje Final -->
+        <div style="text-align: center; padding: 30px 20px; background: rgba(255, 23, 68, 0.2); border-radius: 15px; margin-top: 30px;">
+            <p style="font-size: 18px; line-height: 1.8;">
+                🎊 <strong>¡Tu presencia y secreto son esenciales para este día mágico!</strong> 🎊
+            </p>
+            <p style="font-size: 16px; margin-top: 15px; color: rgba(255, 255, 255, 0.8);">
+                Recordatorio: Esta es una SORPRESA. No menciones nada a Erasmo, no publicar nada antes de la sorpresa.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Contador regresivo (configura la fecha del evento)
+        const eventDate = new Date('2025-10-31T12:30:00-05:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown').innerHTML = '<h2 style="text-align: center; color: #00e5ff;">¡El evento es HOY! 🎉</h2>';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Manejo de carga de imagen
+        document.getElementById('photoUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const placeholder = document.getElementById('imagePlaceholder');
+                    placeholder.innerHTML = `<img src="${event.target.result}" alt="Foto del homenajeado">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Crear confeti animado
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.background = ['#FFD700', '#00e5ff', '#ff1744', '#00ff00'][Math.floor(Math.random() * 4)];
+            document.body.appendChild(confetti);
+
+            setTimeout(() => confetti.remove(), 5000);
+        }
+
+        setInterval(createConfetti, 300);
+
+        // Funciones de botones
+        function confirmarAsistencia() {
+            const mensaje = "¡Hola! Confirmo mi asistencia a la fiesta SORPRESA de Erasmo.";
+            const url = `https://wa.me/51939421350?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        function compartir() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '🎉 Fiesta Sorpresa',
+                    text: '¡Estás invitado a una fiesta sorpresa! 🤫'
+                });
+            } else {
+                alert('Copia el enlace de esta página para compartir la invitación');
+            }
+        }
+    </script>
+</body>
+</html>
